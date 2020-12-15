@@ -207,9 +207,10 @@
             // comenzamos con p5.js
             function preload(){
                 fanzine = createSprite(170,175, 350,350);
-                    //agregué dos animaciones al sprite
+                    //agruegé dos animaciones al sprite
                     var animation = fanzine.addAnimation( 'abriendo','sprite/fanzine001.png','sprite/fanzine004.png' );
                         fanzine.addAnimation('cerrando', 'sprite/cerrando001.png', 'sprite/cerrando004.png');
+                
             }
                 
                 
@@ -221,36 +222,46 @@
             function draw() {
                 fill(0);
 
-               
+               //si el mouse se encuentra dentro del área del fanzine, se reproduce la animación de este abriendose
                 if((75<mouseX)&&(275>mouseX)&&(0<mouseY)&&(350>mouseY)) { 
                     fanzine.changeAnimation('abriendo');  
-                    x = x + 1;
-                    //si el mouse se encuentra dentro del área del fanzine, se reproduce la animación de este abriendose
+                    x = x + 1;               
                 }
 
-                else  {
+                //si el mouse se encuentra fuera del área del fanzine, luego de haber estado adentro, se reproduce la animación de este cerrandose
+                else {
+
+                    if (x===10){
                     fanzine.changeAnimation('cerrando');
-                    x = x + 1;
-                    //si el mouse se encuentra dentro del área del fanzine, se reproduce la animación de este abriendose
+                    y = y + 1;
+                    }
                         
                 }
 
                 drawSprites();
                 
-                           
-                if(x===10){
-                 noLoop();
-                 //para que se detenga la animación al finalizar un ciclo
-               }              
-                
-                if(x===20){
-                  noLoop();
-                  //para que se detenga la animación al finalizar un ciclo
-               }
-                
-                    
 
+                if(x===10){
+                  if((75<mouseX)&&(275>mouseX)&&(0<mouseY)&&(350>mouseY)){
+                        noLoop(); //si se cumple el primer ciclo de animación de 'abriendo' y se sigue dentro del area, esta se pausa
+                       }
+                    else {
+                        x=0; //si se cumple el primer ciclo de animación de 'abriendo' y se sale del area, se puede reproducir el if nuevamente
+                       }  
+                }
+                           
+                if(y===10){
+                    if((75<mouseX)&&(275>mouseX)&&(0<mouseY)&&(350>mouseY)){
+                        y=0; //si se cumple el primer ciclo de animación de 'cerrando' y se entra al area, se puede reproducir el if nuevamente
+                       }
+                    else {
+                        noLoop(); //si se cumple el primer ciclo de animación de 'cerrando' y se sigue fuera del area, esta se pausa
+                       } 
+                }              
+                
+                
             }
+
                 
             
 
